@@ -1,0 +1,41 @@
+departments as d
+-
+dept_no varchar(4) PK
+dept_name varchar UNIQUE
+
+employees as e
+-
+emp_no int PK
+birth_date varchar(10)
+first_name varchar
+last_name varchar
+gender varchar(1)
+hire_date varchar(10)
+
+dept_manager as dm
+-
+dept_no varchar(4) PK FK >- d.dept_no
+emp_no int FK >- e.emp_no
+from_date varchar(10) PK
+to_date varchar(10)
+
+dept_emp as de
+-
+emp_no int PK FK >- e.emp_no
+dept_no varchar(4) PK FK >- d.dept_no
+from_date varchar(10) PK
+to_date varchar(10)
+
+titles as t
+-
+emp_no int PK FK >- e.emp_no
+title varchar
+from_date varchar(10) PK
+to_date varchar(10)
+
+salaries as s
+-
+emp_no int PK FK >- e.emp_no
+salary int
+from_date varchar(10)
+to_date varchar(10)
