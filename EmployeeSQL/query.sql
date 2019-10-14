@@ -63,19 +63,20 @@ JOIN employees AS e ON (dm.emp_no = e.emp_no);
 -- JOIN dept_emp AS de ON (de.emp_no = e.emp_no) 
 -- JOIN departments AS d ON (de.dept_no=d.dept_no);
 
--- 		SELECT emp_no,dept_no,from_date
--- 		FROM (
--- 			SELECT emp_no,dept_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY (emp_no,dept_no)
--- 		) as temp1;
+	-- 	SELECT emp_no,from_date
+	-- 	FROM (
+	-- 		SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
+	-- 	) as temp1;
 
--- 	SELECT de.emp_no,de.dept_no
--- 	FROM dept_emp de
--- 	JOIN (
--- 		SELECT emp_no,dept_no,from_date
--- 		FROM (
--- 			SELECT emp_no,dept_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY (emp_no,dept_no)
--- 		) as temp1
--- 	) as temp2 ON de.from_date = temp2.from_date;
+	-- SELECT de.emp_no,de.dept_no
+	-- FROM dept_emp de
+	-- JOIN (
+	-- 	SELECT emp_no,from_date
+	-- 	FROM (
+	-- 		SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
+	-- 	) as temp1
+	-- ) as temp2 ON de.from_date = temp2.from_date;
+
 
 SELECT e.emp_no,e.last_name,e.first_name,d.dept_name
 FROM employees AS e 
@@ -83,9 +84,9 @@ JOIN(
 	SELECT de.emp_no,de.dept_no
 	FROM dept_emp de
 	JOIN (
-		SELECT emp_no,dept_no,from_date
+		SELECT emp_no,from_date
 		FROM (
-			SELECT emp_no,dept_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY (emp_no,dept_no)
+			SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
 		) as temp1
 	) as temp2 ON de.from_date = temp2.from_date
 ) AS deselected ON (deselected.emp_no = e.emp_no)
