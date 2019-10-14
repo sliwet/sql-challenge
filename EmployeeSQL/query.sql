@@ -16,21 +16,8 @@ WHERE hire_date >= '1986-01-01' AND hire_date <= '1986-12-31';
 -- last name, first name, and start and end employment dates.
 -- dm.dept_no >- d.dept_no , dm.emp_no >- e.emp_no
 
-	-- 	SELECT dept_no,from_date
-	-- 	FROM (
-	-- 		SELECT dept_no ,MAX(from_date) AS "from_date" FROM dept_manager GROUP BY dept_no
-	-- 	) as temp1;
-
-	-- SELECT dm.dept_no,dm.emp_no,dm.from_date,dm.to_date
-	-- FROM dept_manager dm
-	-- JOIN (
-	-- 	SELECT dept_no,from_date
-	-- 	FROM (
-	-- 		SELECT dept_no ,MAX(from_date) AS "from_date" FROM dept_manager GROUP BY dept_no
-	-- 	) as temp1
-	-- ) as temp2 ON dm.from_date = temp2.from_date;
-
 -- The following code will list only the current manager for each department
+
 SELECT d.dept_no,d.dept_name,dmselected.emp_no,e.last_name,e.first_name,dmselected.from_date,dmselected.to_date
 FROM departments AS d 
 JOIN 
@@ -41,16 +28,18 @@ JOIN
 		SELECT dept_no,from_date
 		FROM (
 			SELECT dept_no ,MAX(from_date) AS "from_date" FROM dept_manager GROUP BY dept_no
-		) as temp1
-	) as temp2 ON dm.from_date = temp2.from_date
+		) as temp1 
+	) as temp2 
+	ON temp2.dept_no = dm.dept_no AND temp2.from_date = dm.from_date
 ) as dmselected ON (dmselected.dept_no = d.dept_no)
-JOIN employees AS e ON (dmselected.emp_no = e.emp_no);
+JOIN employees AS e ON (e.emp_no = dmselected.emp_no);
 
 -- The following code list all the managers including previous managers for each department
-SELECT d.dept_no,d.dept_name,dm.emp_no,e.last_name,e.first_name,dm.from_date,dm.to_date
-FROM departments AS d 
-JOIN dept_manager AS dm ON (dm.dept_no = d.dept_no) 
-JOIN employees AS e ON (dm.emp_no = e.emp_no);
+--
+-- SELECT d.dept_no,d.dept_name,dm.emp_no,e.last_name,e.first_name,dm.from_date,dm.to_date
+-- FROM departments AS d 
+-- JOIN dept_manager AS dm ON (dm.dept_no = d.dept_no) 
+-- JOIN employees AS e ON (dm.emp_no = e.emp_no);
 
 
 -- 4. List the department of each employee with the following information: 
@@ -63,21 +52,6 @@ JOIN employees AS e ON (dm.emp_no = e.emp_no);
 -- JOIN dept_emp AS de ON (de.emp_no = e.emp_no) 
 -- JOIN departments AS d ON (de.dept_no=d.dept_no);
 
-	-- 	SELECT emp_no,from_date
-	-- 	FROM (
-	-- 		SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
-	-- 	) as temp1;
-
-	-- SELECT de.emp_no,de.dept_no
-	-- FROM dept_emp de
-	-- JOIN (
-	-- 	SELECT emp_no,from_date
-	-- 	FROM (
-	-- 		SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
-	-- 	) as temp1
-	-- ) as temp2 ON de.from_date = temp2.from_date;
-
-
 SELECT e.emp_no,e.last_name,e.first_name,d.dept_name
 FROM employees AS e 
 JOIN(
@@ -88,9 +62,9 @@ JOIN(
 		FROM (
 			SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
 		) as temp1
-	) as temp2 ON de.from_date = temp2.from_date
+	) as temp2 ON temp2.emp_no = de.emp_no AND temp2.from_date = de.from_date
 ) AS deselected ON (deselected.emp_no = e.emp_no)
-JOIN departments AS d ON (deselected.dept_no=d.dept_no);
+JOIN departments AS d ON (d.dept_no=deselected.dept_no);
 
 -- 5. List all employees whose first name is "Hercules" and last names begin with "B."
 
@@ -109,20 +83,6 @@ WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
 -- JOIN departments AS d ON (de.dept_no=d.dept_no)
 -- WHERE d.dept_name = 'Sales';
 
--- 		SELECT emp_no,from_date
--- 		FROM (
--- 			SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
--- 		) as temp1;
-
--- 	SELECT de.emp_no,de.dept_no
--- 	FROM dept_emp de
--- 	JOIN (
--- 		SELECT emp_no,from_date
--- 		FROM (
--- 			SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
--- 		) as temp1
--- 	) as temp2 ON de.from_date = temp2.from_date;
-
 SELECT e.emp_no,e.last_name,e.first_name,d.dept_name
 FROM employees AS e 
 JOIN(
@@ -133,9 +93,9 @@ JOIN(
 		FROM (
 			SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
 		) as temp1
-	) as temp2 ON de.from_date = temp2.from_date
+	) as temp2 ON temp2.emp_no = de.emp_no AND temp2.from_date = de.from_date
 ) AS deselected ON (deselected.emp_no = e.emp_no) 
-JOIN departments AS d ON (deselected.dept_no=d.dept_no)
+JOIN departments AS d ON (d.dept_no=deselected.dept_no)
 WHERE d.dept_name = 'Sales';
 
 -- 7. List all employees in the Sales and Development departments, including their 
@@ -152,9 +112,9 @@ JOIN(
 		FROM (
 			SELECT emp_no,MAX(from_date) AS "from_date" FROM dept_emp GROUP BY emp_no
 		) as temp1
-	) as temp2 ON de.from_date = temp2.from_date
+	) as temp2 ON temp2.emp_no = de.emp_no AND temp2.from_date = de.from_date
 ) AS deselected ON (deselected.emp_no = e.emp_no) 
-JOIN departments AS d ON (deselected.dept_no=d.dept_no)
+JOIN departments AS d ON (d.dept_no=deselected.dept_no)
 WHERE d.dept_name = 'Sales' OR d.dept_name = 'Development';
 
 -- 8 In descending order, list the frequency count of employee last names
