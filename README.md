@@ -1,7 +1,5 @@
 # SQL Homework - Employee Database: A Mystery in Two Parts
 
-![sql.png](sql.png)
-
 ## Background
 
 It is a beautiful spring day, and it is two weeks since you have been hired as a new data engineer at Pewlett Hackard. Your first major task is a research project on employees of the corporation from the 1980s and 1990s. All that remain of the database of employees from that period are six CSV files.
@@ -13,18 +11,6 @@ In this assignment, you will design the tables to hold data in the CSVs, import 
 2. Data Engineering
 
 3. Data Analysis
-
-### Before You Begin
-
-1. Create a new repository for this project called `sql-challenge`. **Do not add this homework to an existing repository**.
-
-2. Clone the new repository to your computer.
-
-3. Inside your local git repository, create a directory for the SQL challenge. Use a folder name to correspond to the challenge: **EmployeeSQL**.
-
-4. Add your files to this folder.
-
-5. Push the above changes to GitHub.
 
 ## Instructions
 
@@ -81,18 +67,6 @@ As you examine the data, you are overcome with a creeping suspicion that the dat
 ## Epilogue
 
 Evidence in hand, you march into your boss's office and present the visualization. With a sly grin, your boss thanks you for your work. On your way out of the office, you hear the words, "Search your ID number." You look down at your badge to see that your employee ID number is 499942.
-
-## Submission
-
-* Create an image file of your ERD.
-
-* Create a `.sql` file of your table schemata.
-
-* Create a `.sql` file of your queries.
-
-* (Optional) Create a Jupyter Notebook of the bonus analysis.
-
-* Create and upload a repository with the above files to GitHub and post a link on BootCamp Spot.
 
 ### Copyright
 
